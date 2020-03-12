@@ -95,7 +95,6 @@ module.exports =
       // Uncomment the lines below to handle error codes individually. Otherwise,
       // call callback() and simply report the remote server as being offline.
 
-      /*
       if(err.code == "ENOTFOUND")
       {
         console.log("Unable to resolve " + this.address + ".");
@@ -106,12 +105,11 @@ module.exports =
         console.log("Unable to connect to port " + this.port + ".");
         return;
       }
-      */
 
       callback();
 
       // Uncomment the line below for more details pertaining to network errors.
-      //console.log(err);
+      console.log(err);
     });
   }
 };
