@@ -75,7 +75,6 @@ module.exports =
         }
       }
       callback()
-      this.online = null
       client.end();
     });
 
