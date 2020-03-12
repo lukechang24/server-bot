@@ -10,8 +10,6 @@ Object.keys(botCommands).map(key => {
 
 const TOKEN = process.env.TOKEN;
 
-bot.login(TOKEN);
-
 bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
 });
@@ -31,3 +29,5 @@ bot.on('message', msg => {
     msg.reply('there was an error trying to execute that command!');
   }
 });
+
+bot.login(TOKEN);
