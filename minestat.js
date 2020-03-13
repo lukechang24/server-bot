@@ -33,65 +33,55 @@ latency = null;            // ping time to server in milliseconds
 
 module.exports =
 {
-  init: function(address, port, timeout, callback)
-  {
+  init: function(address, port, timeout, callback) {
     this.address = address;
     this.port = port;
 
     // if 3rd argument is a function, it's the callback (timeout is optional)
-    if(typeof(timeout) === typeof(Function()))
-    {
+    if(typeof(timeout) === typeof(Function())) {
       callback = timeout;
       timeout = DEFAULT_TIMEOUT;
     }
 
     const net = require('net');
     var start_time = new Date();
-    const client = net.connect(port, address, () =>
-    {
+    const client = net.connect(port, address, () => {
       this.latency = Math.round(new Date() - start_time);
       var buff = Buffer.from([ 0xFE, 0x01 ]);
       client.write(buff);
     });
 
     client.setTimeout(timeout * 1000);
-
-    client.on('data', (data) =>
-    {
-      if(data != null && data != '')
-      {
+    client.on('data', (data) => {
+      console.log("it dataed!")
+      if(data != null && data != '') {
         var server_info = data.toString().split("\x00\x00\x00");
-        if(server_info != null && server_info.length >= NUM_FIELDS)
-        {
+        if(server_info != null && server_info.length >= NUM_FIELDS) {
           this.online = true;
           this.version = server_info[2].replace(/\u0000/g,'');
           this.motd = server_info[3].replace(/\u0000/g,'');
           this.current_players = server_info[4].replace(/\u0000/g,'');
           this.max_players = server_info[5].replace(/\u0000/g,'');
-        }
-        else
-        {
+        } else {
           this.online = false;
         }
       }
-      callback()
+      callback();
       client.end();
     });
 
-    client.on('timeout', () =>
-    {
+    client.on('timeout', () => {
+      console.log("it timeouted!")
       callback();
       client.end();
       process.exit();
     });
 
-    client.on('end', () =>
-    {
+    client.on('end', () => {
       // nothing needed here
     });
 
-    client.on('error', (err) =>
-    {
+    client.on('error', (err) => {
       // Uncomment the lines below to handle error codes individually. Otherwise,
       // call callback() and simply report the remote server as being offline.
 
