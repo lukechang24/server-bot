@@ -53,7 +53,6 @@ module.exports =
 
     client.setTimeout(timeout * 1000);
     client.on('data', (data) => {
-      console.log(data, "HIT")
       if(data != null && data != '') {
         var server_info = data.toString().split("\x00\x00\x00");
         if(server_info != null && server_info.length >= NUM_FIELDS) {
@@ -74,7 +73,6 @@ module.exports =
     client.on('timeout', () => {
       callback();
       client.end();
-      process.exit();
     });
 
     client.on('end', () => {
