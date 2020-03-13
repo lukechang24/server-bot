@@ -53,7 +53,7 @@ module.exports =
 
     client.setTimeout(timeout * 1000);
     client.on('data', (data) => {
-      console.log("it dataed!")
+      console.log(data, "HIT")
       if(data != null && data != '') {
         var server_info = data.toString().split("\x00\x00\x00");
         if(server_info != null && server_info.length >= NUM_FIELDS) {
@@ -67,6 +67,7 @@ module.exports =
         }
       }
       callback();
+      this.online = false
       client.end();
     });
 
@@ -81,6 +82,7 @@ module.exports =
     });
 
     client.on('error', (err) => {
+      console.log("error")
       // Uncomment the lines below to handle error codes individually. Otherwise,
       // call callback() and simply report the remote server as being offline.
 
@@ -100,7 +102,7 @@ module.exports =
       callback();
 
       // Uncomment the line below for more details pertaining to network errors.
-      //console.log(err);
+      console.log(err);
     });
   }
 };
