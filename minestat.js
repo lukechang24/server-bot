@@ -21,7 +21,7 @@
 // For use with Node.js
 
 const NUM_FIELDS = 6;      // number of values expected from server
-const DEFAULT_TIMEOUT = 30; // default TCP timeout in seconds
+const DEFAULT_TIMEOUT = 10; // default TCP timeout in seconds
 address = null;
 port = null;
 online = null;             // online or offline?
